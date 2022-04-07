@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/prodanlabs.github.io\/",
+  "author": {
+    "@type": "Person",
+    "name": "Prodan",
+    
+    "image": "https://avatars.githubusercontent.com/u/28917392?v=4"
+    
+  },
+  "name":"Prodan Blog",
+  "description":"",
+  "url":"https:\/\/prodanlabs.github.io\/post\/karmada\/funny-karmada-04\/",
+  "keywords":"[tech]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.96.0 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="Prodan">
+<meta name="keywords" content="tech">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Karmada 有趣的玩法：ANP">
+<meta name="twitter:title" content="Karmada 有趣的玩法：ANP">
+<meta property="og:url" content="https://prodanlabs.github.io/post/karmada/funny-karmada-04/">
+<meta property="twitter:url" content="https://prodanlabs.github.io/post/karmada/funny-karmada-04/">
+<meta property="og:site_name" content="Prodan Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2022-04-05T16:55:07">
+  
+  
+    <meta property="article:modified_time" content="2022-04-05T16:55:07">
+  
+  
+  
+    
+      <meta property="article:section" content="Karmada">
+    
+  
+  
+    
+      <meta property="article:tag" content="Karmada">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/28917392?v=4">
+  <meta property="twitter:image" content="https://avatars.githubusercontent.com/u/28917392?v=4">
+
+
+
+
+
+
+    <title>Karmada 有趣的玩法：ANP</title>
+
+    <link rel="icon" href="https://prodanlabs.github.io/images/logo.png">
+    
+
+    
+
+    <link rel="canonical" href="https://prodanlabs.github.io/post/karmada/funny-karmada-04/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://prodanlabs.github.io/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://prodanlabs.github.io/" aria-label="去首页">Prodan Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://prodanlabs.github.io/#about" aria-label="打开链接: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://prodanlabs.github.io/#about" aria-label="阅读有关作者的更多信息">
+          <img class="sidebar-profile-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">Prodan</h4>
+        
+          <h5 class="sidebar-profile-bio">Every time you come to mind, I realize I&rsquo;m smiling.</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/prodanlabs" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      Karmada 有趣的玩法：ANP
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time datetime="2022-04-05T16:55:07&#43;08:00">
+        
+  四月 5, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://prodanlabs.github.io/categories/karmada">Karmada</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <p><img src="../images/funny-karmada-04-01.jpg" alt="avatar">
+我们都知道 Karmada 纳管成员集群有 push 和 pull 两种模式，pull 模式主要用于解决控制面与数据面的网络单向通信的应用场景。比如 Karmada 控制面部署在云上，成员集群在私有环境没有固定的公网IP或出于安全考虑，成员集群的 ApiServer 不对外开放。</p>
+<p>为了更方便管理 pull 模式的成员集群，Karmada 也提供 ANP (apiserver-network-proxy) 解决方案，通过 clusters/proxy 来转发请求。
+ANP 是在 kubernetes 的 EgressSelector 功能上开发的一个参考实现，旨在实现 Kubernetes 集群组件的跨网络通信。比如 Konnectivity 可以为控制面提供集群通信的 TCP 级别代理。</p>
+<p>接下来笔者举个简单的例子， 在 Karmada 控制面通过 ANP，获取 pull 模式成员集群的 pod 日志。</p>
+<h3 id="部署-anp">部署 ANP</h3>
+<h5 id="克隆-anp-仓库">克隆 ANP 仓库</h5>
+<p>这里用的是 <code>v0.0.30</code> 版本</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone --branch v0.0.30 https://github.com/kubernetes-sigs/apiserver-network-proxy.git
+</span></span></code></pre></div><h5 id="生成证书">生成证书</h5>
+<p><code>PROXY_SERVER_HOST</code> 是 Karmadahost 集群的 IP</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd apiserver-network-proxy
+</span></span><span style="display:flex;"><span>make certs PROXY_SERVER_IP<span style="color:#f92672">={</span>PROXY_SERVER_HOST<span style="color:#f92672">}</span>
+</span></span></code></pre></div><h5 id="在-karmada-host-集群部署-proxy-server">在 Karmada host 集群部署 proxy server</h5>
+<p>复制证书到 /etc/anp-server 目录</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir  /etc/anp-server
+</span></span><span style="display:flex;"><span>cp certs/frontend/issued/ca.crt  /etc/anp-server/server-ca.crt
+</span></span><span style="display:flex;"><span>cp certs/frontend/issued/proxy-frontend.crt /etc/anp-server/server-proxy-frontend.crt
+</span></span><span style="display:flex;"><span>cp certs/frontend/private/proxy-frontend.key /etc/anp-server/server-proxy-frontend.key
+</span></span><span style="display:flex;"><span>cp certs/agent/issued/ca.crt /etc/anp-server/cluster-ca.crt
+</span></span><span style="display:flex;"><span>cp certs/agent/issued/proxy-frontend.crt /etc/anp-server/cluster-proxy-frontend.crt
+</span></span><span style="display:flex;"><span>cp certs/agent/private/proxy-frontend.key /etc/anp-server/cluster-proxy-frontend.key
+</span></span></code></pre></div><p><code>{PROXY_SERVER_NAME}</code> 是证书所在的 Node Name
+默认模式是 GRPC，可以通过 &ndash;mode=http-connect 切换为 http-connect 模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">proxy-server</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">karmada-system</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">proxy-server</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">proxy-server</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">args</span>:
+</span></span><span style="display:flex;"><span>          - --<span style="color:#ae81ff">health-port=8092</span>
+</span></span><span style="display:flex;"><span>          - --<span style="color:#ae81ff">proxy-strategies=destHost</span>
+</span></span><span style="display:flex;"><span>          - --<span style="color:#ae81ff">server-ca-cert=/certs/server-ca.crt</span>
+</span></span><span style="display:flex;"><span>          - --<span style="color:#ae81ff">server-cert=/certs/server-proxy-frontend.crt</span>
+</span></span><span style="display:flex;"><span>          - --<span style="color:#ae81ff">server-key=/certs/server-proxy-frontend.key</span>
+</span></span><span style="display:flex;"><span>          - --<span style="color:#ae81ff">cluster-ca-cert=/certs/cluster-ca.crt</span>
+</span></span><span style="display:flex;"><span>          - --<span style="color:#ae81ff">cluster-cert=/certs/cluster-proxy-frontend.crt</span>
+</span></span><span style="display:flex;"><span>          - --<span style="color:#ae81ff">cluster-key=/certs/cluster-proxy-frontend.key</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">us.gcr.io/k8s-artifacts-prod/kas-network-proxy/proxy-server:v0.0.30</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">imagePullPolicy</span>: <span style="color:#ae81ff">IfNotPresent</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">livenessProbe</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">failureThreshold</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">httpGet</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/healthz</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8092</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">scheme</span>: <span style="color:#ae81ff">HTTP</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">initialDelaySeconds</span>: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">periodSeconds</span>: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">successThreshold</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">timeoutSeconds</span>: <span style="color:#ae81ff">60</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">proxy-server</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/certs</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cert</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Always</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">hostNetwork</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodeSelector</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">kubernetes.io/hostname</span>: {<span style="color:#ae81ff">PROXY_SERVER_NAME}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cert</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">hostPath</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/etc/anp-server</span>
+</span></span></code></pre></div><p>部署 proxy server</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl apply -f proxy-server.yaml 
+</span></span></code></pre></div><h5 id="在成员集群部署-proxy-agent">在成员集群部署 proxy agent</h5>
+<p>打包 agent 证书并上传到成员集群</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir anp-agent
+</span></span><span style="display:flex;"><span>cp certs/agent/issued/ca.crt anp-agent/ca.crt
+</span></span><span style="display:flex;"><span>cp certs/agent/issued/proxy-agent.crt anp-agent/proxy-agent.crt
+</span></span><span style="display:flex;"><span>cp certs/agent/private/proxy-agent.key anp-agent/proxy-agent.key
+</span></span><span style="display:flex;"><span>tar -zcvf anp-agent.tar.gz anp-agent
+</span></span></code></pre></div><p>在成员集群解压证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tar -zxvf anp-agent.tar.gz -C /etc
+</span></span></code></pre></div><p><code>{PROXY_AGENT_NAME}</code> 是证书所在的 Node Name
+<code>{PROXY_SERVER_HOST}</code> 是 proxy server IP</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">proxy-agent</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">proxy-agent</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">karmada-system</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">proxy-agent</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">proxy-agent</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">args</span>:
+</span></span><span style="display:flex;"><span>        - --<span style="color:#ae81ff">ca-cert=/certs/ca.crt</span>
+</span></span><span style="display:flex;"><span>        - --<span style="color:#ae81ff">agent-cert=/certs/proxy-agent.crt</span>
+</span></span><span style="display:flex;"><span>        - --<span style="color:#ae81ff">agent-key=/certs/proxy-agent.key</span>
+</span></span><span style="display:flex;"><span>        - --<span style="color:#ae81ff">proxy-server-host={PROXY_SERVER_HOST}</span>
+</span></span><span style="display:flex;"><span>        - --<span style="color:#ae81ff">proxy-server-port=8091</span>
+</span></span><span style="display:flex;"><span>        - --<span style="color:#ae81ff">agent-identifiers=host=${HOST_IP}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">us.gcr.io/k8s-artifacts-prod/kas-network-proxy/proxy-agent:v0.0.30</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">imagePullPolicy</span>: <span style="color:#ae81ff">IfNotPresent</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">proxy-agent</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">HOST_IP</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">valueFrom</span>:
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">fieldRef</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">fieldPath</span>: <span style="color:#ae81ff">status.hostIP</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">livenessProbe</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">httpGet</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">scheme</span>: <span style="color:#ae81ff">HTTP</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8093</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/healthz</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">initialDelaySeconds</span>: <span style="color:#ae81ff">15</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">timeoutSeconds</span>: <span style="color:#ae81ff">60</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/certs</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cert</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodeSelector</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">kubernetes.io/hostname</span>: {<span style="color:#ae81ff">PROXY_AGENT_NAME}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cert</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">hostPath</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/etc/anp-agent</span>
+</span></span></code></pre></div><p>部署 proxy agent</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl apply -f proxy-agent.yaml
+</span></span></code></pre></div><h3 id="获取-pull-模式成员集群-pod-日志">获取 pull 模式成员集群 Pod 日志</h3>
+<p>先通过 konnectivity 库创建一个 Grpc Tunnel</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">LogsPullOptions</span>) <span style="color:#a6e22e">CreateTunnel</span>() (<span style="color:#a6e22e">konnectivity</span>.<span style="color:#a6e22e">Tunnel</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">tlsCfg</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">GetClientTLSConfig</span>(<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">ProxyCACert</span>, <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">ProxyCert</span>, <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">ProxyKey</span>, <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">ProxyServerHost</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">konnectivity</span>.<span style="color:#a6e22e">CreateSingleUseGrpcTunnel</span>(
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">JoinHostPort</span>(<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">ProxyServerHost</span>, <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">ProxyServerPort</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">WithTransportCredentials</span>(<span style="color:#a6e22e">grpccredentials</span>.<span style="color:#a6e22e">NewTLS</span>(<span style="color:#a6e22e">tlsCfg</span>)),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">WithKeepaliveParams</span>(<span style="color:#a6e22e">keepalive</span>.<span style="color:#a6e22e">ClientParameters</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Time</span>: <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>,
+</span></span><span style="display:flex;"><span>  }),
+</span></span><span style="display:flex;"><span> )
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">```
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">设置 kubeconfig，请求走 Grpc Tunnel
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">```</span><span style="color:#66d9ef">go</span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">cfg</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">RestConfig</span>(<span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">GlobalOptions</span>.<span style="color:#a6e22e">Kubeconfig</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">cfg</span>.<span style="color:#a6e22e">Dial</span> = <span style="color:#a6e22e">dialerTunnel</span>.<span style="color:#a6e22e">DialContext</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">```
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">获取日志
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">```</span><span style="color:#66d9ef">go</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">LogsPullOptions</span>) <span style="color:#a6e22e">GetPodLogs</span>(<span style="color:#a6e22e">client</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">kubernetes</span>.<span style="color:#a6e22e">Clientset</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">podLogOpts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">corev1</span>.<span style="color:#a6e22e">PodLogOptions</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Follow</span>: <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Follow</span>,
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">TailLines</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">podLogOpts</span>.<span style="color:#a6e22e">TailLines</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">TailLines</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">reqLogs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">CoreV1</span>().<span style="color:#a6e22e">Pods</span>(<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">GlobalOptions</span>.<span style="color:#a6e22e">Namespace</span>).<span style="color:#a6e22e">GetLogs</span>(<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">PodName</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">podLogOpts</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">podLogs</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reqLogs</span>.<span style="color:#a6e22e">Stream</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>())
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">podLogs</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">podLogs</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">b</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">ReadBytes</span>(<span style="color:#e6db74">&#39;\n&#39;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(string(<span style="color:#a6e22e">b</span>))
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">``</span><span style="color:#960050;background-color:#1e0010">`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">测试</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">可以获取到日志</span>
+</span></span><span style="display:flex;"><span>![<span style="color:#a6e22e">avatar</span>](..<span style="color:#f92672">/</span><span style="color:#a6e22e">images</span><span style="color:#f92672">/</span><span style="color:#a6e22e">funny</span><span style="color:#f92672">-</span><span style="color:#a6e22e">karmada</span><span style="color:#f92672">-</span><span style="color:#ae81ff">04</span><span style="color:#f92672">-</span><span style="color:#ae81ff">02.</span><span style="color:#a6e22e">png</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">###</span> <span style="color:#a6e22e">最后</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">通过</span> <span style="color:#a6e22e">Tunnel</span> <span style="color:#a6e22e">可以操作</span> <span style="color:#a6e22e">pull</span> <span style="color:#a6e22e">模式成员集群的对象</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">但是不能使用</span> <span style="color:#a6e22e">exec</span> <span style="color:#a6e22e">进入</span> <span style="color:#a6e22e">pod</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">exec</span> <span style="color:#a6e22e">使用的是</span> <span style="color:#a6e22e">SPDY</span> <span style="color:#a6e22e">协议</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">笔者怀疑是请求在转换</span> <span style="color:#a6e22e">SPDY</span> <span style="color:#a6e22e">协议时出错了</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">还待验证</span><span style="color:#960050;background-color:#1e0010">。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">在笔者看来</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">使用</span> <span style="color:#a6e22e">pull</span> <span style="color:#a6e22e">模式的应用场景挺常见的</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">作为多集群管理的工具应该提供这方面的支持</span><span style="color:#960050;background-color:#1e0010">。</span><span style="color:#a6e22e">而</span> <span style="color:#a6e22e">Karmada</span> <span style="color:#a6e22e">也使用了</span> <span style="color:#a6e22e">ANP</span> <span style="color:#a6e22e">来增强</span> <span style="color:#a6e22e">pull</span> <span style="color:#a6e22e">模式</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">不过作为可选组件</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">目前也没有支持太多的功能</span><span style="color:#960050;background-color:#1e0010">。</span><span style="color:#a6e22e">Karmada</span> <span style="color:#a6e22e">也在不断地完善中</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">感兴趣的读者也可以来关注下最新进展</span><span style="color:#960050;background-color:#1e0010">。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">参考链接</span><span style="color:#960050;background-color:#1e0010">：</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">https</span>:<span style="color:#75715e">//github.com/karmada-io/karmada/blob/master/docs/working-with-anp.md
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">https</span>:<span style="color:#75715e">//kubernetes.io/docs/tasks/extend-kubernetes/setup-konnectivity/
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">https</span>:<span style="color:#75715e">//github.com/kubernetes-sigs/apiserver-network-proxy
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">文章中的源码</span><span style="color:#960050;background-color:#1e0010">：</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">https</span>:<span style="color:#75715e">//github.com/prodanlabs/karmada-examples
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">---</span>
+</span></span><span style="display:flex;"><span>![](<span style="color:#f92672">/</span><span style="color:#a6e22e">images</span><span style="color:#f92672">/</span><span style="color:#a6e22e">weixin</span>.<span style="color:#a6e22e">png</span>)
+</span></span></code></pre></div>
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://prodanlabs.github.io/tags/karmada/">Karmada</a>
+
+                  </div>
+                
+              
+            
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--disabled">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-03/" data-tooltip="Karmada 有趣的玩法：自定义准入控制器" aria-label="上一篇: Karmada 有趣的玩法：自定义准入控制器">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+            
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 Prodan. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--disabled">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-03/" data-tooltip="Karmada 有趣的玩法：自定义准入控制器" aria-label="上一篇: Karmada 有趣的玩法：自定义准入控制器">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+    
+    <h4 id="about-card-name">Prodan</h4>
+    
+      <div id="about-card-bio">Every time you come to mind, I realize I&rsquo;m smiling.</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        DevOps
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        Guangzhou, China.
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://prodanlabs.github.io/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://prodanlabs.github.io/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+    
+  </body>
+</html>
+

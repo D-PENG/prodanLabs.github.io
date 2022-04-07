@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/prodanlabs.github.io\/",
+  "author": {
+    "@type": "Person",
+    "name": "Prodan",
+    
+    "image": "https://avatars.githubusercontent.com/u/28917392?v=4"
+    
+  },
+  "name":"Prodan Blog",
+  "description":"",
+  "url":"https:\/\/prodanlabs.github.io\/post\/karmada\/funny-karmada-02\/",
+  "keywords":"[tech]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.96.0 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="Prodan">
+<meta name="keywords" content="tech">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Karmada 有趣的玩法：多集群监控">
+<meta name="twitter:title" content="Karmada 有趣的玩法：多集群监控">
+<meta property="og:url" content="https://prodanlabs.github.io/post/karmada/funny-karmada-02/">
+<meta property="twitter:url" content="https://prodanlabs.github.io/post/karmada/funny-karmada-02/">
+<meta property="og:site_name" content="Prodan Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2022-02-12T18:20:04">
+  
+  
+    <meta property="article:modified_time" content="2022-02-12T18:20:04">
+  
+  
+  
+    
+      <meta property="article:section" content="Karmada">
+    
+  
+  
+    
+      <meta property="article:tag" content="Karmada">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/28917392?v=4">
+  <meta property="twitter:image" content="https://avatars.githubusercontent.com/u/28917392?v=4">
+
+
+
+
+
+
+    <title>Karmada 有趣的玩法：多集群监控</title>
+
+    <link rel="icon" href="https://prodanlabs.github.io/images/logo.png">
+    
+
+    
+
+    <link rel="canonical" href="https://prodanlabs.github.io/post/karmada/funny-karmada-02/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://prodanlabs.github.io/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://prodanlabs.github.io/" aria-label="去首页">Prodan Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://prodanlabs.github.io/#about" aria-label="打开链接: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://prodanlabs.github.io/#about" aria-label="阅读有关作者的更多信息">
+          <img class="sidebar-profile-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">Prodan</h4>
+        
+          <h5 class="sidebar-profile-bio">Every time you come to mind, I realize I&rsquo;m smiling.</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/prodanlabs" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      Karmada 有趣的玩法：多集群监控
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time datetime="2022-02-12T18:20:04&#43;08:00">
+        
+  二月 12, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://prodanlabs.github.io/categories/karmada">Karmada</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <p><img src="../images/funny-karmada-02-01.png" alt="avatar"></p>
+<p>云原生时代， Kubernetes 多集群架构成为了一个大的方向，在多集群管理、网络、监控等领域都有多种解决方案。在监控方面，由于 Prometheus 的局限性，Thanos 成为了 Kubernetes 多集群监控的解决方案之一，就像 karmada 提供多集群的控制面一样，Thanos 也提供了多集群监控的全局视图。
+接下来笔者结合我们线上的多集群监控方案，通过部署 Thanos 监控多集群的例子，来看看 karmada 在多集群应用场景下，除了有哪些调度的特性外，还提供了什么能力。</p>
+<h3 id="thanos-方案选择">Thanos 方案选择</h3>
+<p>熟悉 Thanos 的读者都知道 Thanos 有两种与 Prometheus 集成的方案，一种是 Thanos 作为 Sidecar 与 Prometheus 运行在同一组 Pod 内，另一种则是 Receiver ，Prometheus 通过 Remote Write 把数据存储到 Thanos。</p>
+<p>笔者选择了后者，在大规模集群和多集群应用场景下，Sidecar 方案感觉没 Receiver 方便好用。(当然，笔者也没有数据支撑这一说法，大家可以选择适合自己的方案。)</p>
+<p>方案设计
+<img src="../images/funny-karmada-02-02.png" alt="avatar"></p>
+<ul>
+<li>Prometheus：采集监控指标数据；</li>
+<li>Thanos Store：存储 Prometheus 数据；</li>
+<li>Thanos Query：提供全局查询视图；</li>
+<li>Thanos Rule：告警规则；</li>
+<li>Alertmanager：推送告警;</li>
+</ul>
+<p>注</p>
+<blockquote>
+<p>这个方案需要打通两个集群的容器网络，社区也有很多解决方案。karmada 也提供了 submariner 解决方案的教程。不过文档似乎有些过时了，submariner 的gateway 使用了 nodeSelector ，所以还需要给节点打上标签。感兴趣的读者可以提交一个 PR 来更新它 :）
+kubectl label node {NodeName} submariner.io/gateway=true
+如果是混合环境，也可以把 Prometheus 的数据写入到远端的 Thanos。
+Thanos 也支持 Grafana，文章中没有部署而已。</p>
+</blockquote>
+<h3 id="部署-thanos">部署 Thanos</h3>
+<p>完整的 yaml 的文件，请看文章后面的链接。</p>
+<h4 id="创建命名空间">创建命名空间</h4>
+<p>在 karmada 控制面创建命名空间，namespace 控制器会把命名空间同步到成员集群。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl create ns monitoring
+</span></span></code></pre></div><h4 id="部署-thanos-receive">部署 Thanos Receive</h4>
+<p>这里部署了一个 pod，部署多个 pod 在 endpoints 增加即可。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># cat thanos-receive-config.yaml</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">hashring</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">monitoring</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">data</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">hashrings.json</span>: |-<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    [
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;endpoints&#34;:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">         [
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">           &#34;thanos-receive-0.thanos-receive.monitoring.svc.cluster.local:10901&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          ], 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;hashring&#34;:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">           &#34;default&#34;, 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;tenants&#34;:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          [ ]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    ]</span>    
+</span></span><span style="display:flex;"><span>---
+</span></span></code></pre></div><p>部署 Thanos Receive ，并传播到成员集群。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl create -f  thanos-receive-sa.yaml
+</span></span><span style="display:flex;"><span>kubectl create -f  thanos-receive-svc.yaml
+</span></span><span style="display:flex;"><span>kubectl create -f  thanos-receive-config.yaml
+</span></span><span style="display:flex;"><span>kubectl create -f  thanos-receive-sts.yaml
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># PropagationPolicy 传播策略，笔者这里的成员集群是 member4 member5</span>
+</span></span><span style="display:flex;"><span>kubectl create -f  thanos-receive-pp.yaml
+</span></span></code></pre></div><h4 id="部署-prometheus">部署 Prometheus</h4>
+<p>因为有多个 Prometheus 向 Thanos 写入数据，为了区分不同的数据源，所以我们需要在 Prometheus 加上一个标识来区分是哪个集群或分区的数据。</p>
+<p>Prometheus 开启 expand-external-labels 特性</p>
+<pre tabindex="0"><code>- --enable-feature=expand-external-labels
+</code></pre><p>配置文件增加 label 配置，从环境变量取值。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>  <span style="color:#f92672">prometheus-kubernetes.yml</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    global:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      scrape_interval:    15s
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      evaluation_interval: 15s
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      external_labels:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        cluster: karmada-${CLUSTER_NAME}</span>    
+</span></span></code></pre></div><p>由于这个 label 是唯一标识，所以我们使用 karmada 的 OverridePolicy 来修改调度之后的结果，不同的成员集群增加不同的环境变量。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">policy.karmada.io/v1alpha1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">OverridePolicy</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">prometheus-member5</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">monitoring</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">resourceSelectors</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">StatefulSet</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">prometheus</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">targetCluster</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">clusterNames</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">member5</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">overriders</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">plaintext</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;/spec/template/spec/containers/0/env&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">operator</span>: <span style="color:#ae81ff">add</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">value</span>: [{<span style="color:#e6db74">&#34;name&#34;</span>:<span style="color:#e6db74">&#34;CLUSTER_NAME&#34;</span>,<span style="color:#e6db74">&#34;value&#34;</span>:<span style="color:#e6db74">&#34;member5&#34;</span>}]
+</span></span></code></pre></div><p>部署 Prometheus ，并传播到成员集群。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl create -f  prometheus-svc.yaml
+</span></span><span style="display:flex;"><span>kubectl create -f  prometheus-config.yaml
+</span></span><span style="display:flex;"><span>kubectl create -f  prometheus-rbac.yaml
+</span></span><span style="display:flex;"><span>kubectl create -f  prometheus-sts.yaml
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># PropagationPolicy 命名空间级资源传播策略</span>
+</span></span><span style="display:flex;"><span>kubectl create -f  prometheus-pp.yaml
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ClusterPropagationPolicy 集群级资源传播策略</span>
+</span></span><span style="display:flex;"><span>kubectl create -f  prometheus-rbac-pp.yaml
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># OverridePolicy 修改调度结果策略</span>
+</span></span><span style="display:flex;"><span>kubectl create -f  prometheus-op.yaml
+</span></span></code></pre></div><h4 id="部署-node-exporter">部署 node-exporter</h4>
+<p>现在我们来部署 node-exporter，后面做测试。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl create -f  node-exporter.yaml
+</span></span><span style="display:flex;"><span>kubectl create -f  node-exporter-pp.yaml
+</span></span></code></pre></div><h4 id="部署-alertmanager">部署 Alertmanager</h4>
+<p>Alertmanager 把告警短信推送到微信，这个微信的配置。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>    <span style="color:#f92672">receivers</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;itesttech&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">wechat_configs</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">send_resolved</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">to_user</span>: <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">to_party</span>: <span style="color:#e6db74">&#34;${TO_PARTY}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">to_tag</span>: <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">agent_id</span>: <span style="color:#e6db74">&#34;${AGENT_ID}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">corp_id</span>: <span style="color:#e6db74">&#34;${CORP_ID}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">api_secret</span>: <span style="color:#e6db74">&#34;${API_SECRET}&#34;</span>
+</span></span></code></pre></div><p>部署 Alertmanager ，并传播到 member5。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl create -f  alertmanager.yaml
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 传播到 member5</span>
+</span></span><span style="display:flex;"><span>kubectl create -f  alertmanager-pp.yaml
+</span></span></code></pre></div><h4 id="部署-thanos-query">部署 Thanos Query</h4>
+<p>thanos query 通过关联多个 Thanos Store 实例，提供多集群的全局视图。karmada 的服务导出导入的特性也可以解决 thanos query 跨集群查询问题。</p>
+<p>笔者这里是把 thanos query  部署到 member5，所以需要把 member4 的  Thanos Receive 服务导出，并在 member5 导入。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">policy.karmada.io/v1alpha1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">PropagationPolicy</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">service-export-member4</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">monitoring</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">resourceSelectors</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">thanos-service</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">multicluster.x-k8s.io/v1alpha1</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ServiceExport</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">thanos-service</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">placement</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">clusterAffinity</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">clusterNames</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#ae81ff">member4</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">multicluster.x-k8s.io/v1alpha1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ServiceImport</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">thanos-service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">ClusterSetIP</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">10901</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">TCP</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">policy.karmada.io/v1alpha1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">PropagationPolicy</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">service-import-member5</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">resourceSelectors</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">multicluster.x-k8s.io/v1alpha1</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ServiceImport</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">thanos-service</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">placement</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">clusterAffinity</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">clusterNames</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#ae81ff">member5</span>
+</span></span></code></pre></div><p>创建并传播 Thanos Receive 的导出导入服务.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 创建 crds 资源对象</span>
+</span></span><span style="display:flex;"><span>kubectl create -f  service-import-export-crds.yaml
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 在 member4 导出</span>
+</span></span><span style="display:flex;"><span>kubectl create -f  thanos-receive-service-export.yaml
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 在 member5 导入</span>
+</span></span><span style="display:flex;"><span>kubectl create -f  thanos-receive-service-import.yaml
+</span></span></code></pre></div><p>执行上面的操作后，在 member5 集群可以看到一个名字为 derived-thanos-service 的派生服务。
+<img src="../images/funny-karmada-02-03.png" alt="avatar"></p>
+<p>现在我们修改 Thanos Query 的配置，除了连接本集群的 Thanos Receive 外，还可以通过派生服务连接 member4 的 Thanos Receive。</p>
+<pre tabindex="0"><code>        - --store=dnssrv+_grpc._tcp.thanos-receive
+        - --store=derived-thanos-service:10901
+</code></pre><p>创建 Thanos Query 并传播到 member5。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl create -f  thanos-query.yaml
+</span></span><span style="display:flex;"><span>kubectl create -f  thanos-query-pp.yaml
+</span></span></code></pre></div><p>在 member5 执行，把 Thanos Query 的 UI 端口暴露出来。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl -n monitoring port-forward --address 0.0.0.0 thanos-query-cbcc78588-klrdr 8088:9090
+</span></span></code></pre></div><p>浏览器访问 member5 {node ip} 的 8088 端口
+<img src="../images/funny-karmada-02-04.png" alt="avatar"></p>
+<p>通过自定义的 cluster 标签可以区分是哪个集群或分区的数据。
+<img src="../images/funny-karmada-02-05.png" alt="avatar"></p>
+<h4 id="部署-thanos-rule">部署 Thanos Rule</h4>
+<p>Thanos Rule 从 Thanos Query 查询数据，并把告警推送到 Alertmanager</p>
+<pre tabindex="0"><code>        - --query=dnssrv+_http._tcp.thanos-query.monitoring.svc.cluster.local
+        - --alertmanagers.url=http://alertmanager.monitoring.svc.cluster.local:9093
+</code></pre><p>我们设置一条规则l来触发告警</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">data</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">rules.yml</span>: |-<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    groups:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - name: Linux
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      rules:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      - alert: 测试告警-磁盘空间利用率大于30
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        expr: ceil(((node_filesystem_size_bytes - node_filesystem_avail_bytes) /node_filesystem_size_bytes) * 100) &gt; 30
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        for: 1m
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        labels:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          severity: 一般告警 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        annotations:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          summary: &#34;文件系统:{{ .Labels.mountpoint }} 使用率过高&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          description: &#34;{{$labels.instance}}: 当前文件系统使用率大于30%，使用率为: {{ $value }}&#34;</span>    
+</span></span></code></pre></div><p>创建 Thanos Rule 并传播到 member5。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl create -f  thanos-rule.yaml
+</span></span><span style="display:flex;"><span>kubectl create -f  thanos-rule-pp.yaml
+</span></span></code></pre></div><p>不出意外，我们将在微信看到这样的告警消息。
+<img src="../images/funny-karmada-02-06.png" alt="avatar"></p>
+<h4 id="最后">最后</h4>
+<p>通过这个例子我们可以看到 Karmada 在多集群应用场景下，除了多集群管理与调度功能之外，还提供了一些特性，比如文章中的集群之间导出和导入服务的功能，还有文章中没有提到的全局 ingress 等功能特性，感兴趣的读者可以去 Karmada 社区查看。</p>
+<p>希望这系列文章在各位读者玩转 Karmada 的路上提供些参考或帮助。</p>
+<p>文章中的 yaml 文件
+<a href="https://github.com/prodanlabs/karmada-examples/tree/main/manifests/monitoring">https://github.com/prodanlabs/karmada-examples/tree/main/manifests/monitoring</a></p>
+<p>参考：
+<a href="https://github.com/karmada-io/karmada/tree/master/docs">https://github.com/karmada-io/karmada/tree/master/docs</a></p>
+<hr>
+<p><img src="https://prodanlabs.github.io/images/weixin.png" alt=""></p>
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://prodanlabs.github.io/tags/karmada/">Karmada</a>
+
+                  </div>
+                
+              
+            
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-01/" data-tooltip="Karmada 有趣的玩法：自定义控制器" aria-label="下一篇: Karmada 有趣的玩法：自定义控制器">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--disabled">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+            
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 Prodan. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-01/" data-tooltip="Karmada 有趣的玩法：自定义控制器" aria-label="下一篇: Karmada 有趣的玩法：自定义控制器">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--disabled">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+    
+    <h4 id="about-card-name">Prodan</h4>
+    
+      <div id="about-card-bio">Every time you come to mind, I realize I&rsquo;m smiling.</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        DevOps
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        Guangzhou, China.
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://prodanlabs.github.io/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://prodanlabs.github.io/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+    
+  </body>
+</html>
+

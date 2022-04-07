@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/prodanlabs.github.io\/",
+  "author": {
+    "@type": "Person",
+    "name": "Prodan",
+    
+    "image": "https://avatars.githubusercontent.com/u/28917392?v=4"
+    
+  },
+  "name":"Prodan Blog",
+  "description":"",
+  "url":"https:\/\/prodanlabs.github.io\/post\/karmada\/funny-karmada-03\/",
+  "keywords":"[tech]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.96.0 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="Prodan">
+<meta name="keywords" content="tech">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Karmada 有趣的玩法：自定义准入控制器">
+<meta name="twitter:title" content="Karmada 有趣的玩法：自定义准入控制器">
+<meta property="og:url" content="https://prodanlabs.github.io/post/karmada/funny-karmada-03/">
+<meta property="twitter:url" content="https://prodanlabs.github.io/post/karmada/funny-karmada-03/">
+<meta property="og:site_name" content="Prodan Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2022-03-18T15:40:49">
+  
+  
+    <meta property="article:modified_time" content="2022-03-18T15:40:49">
+  
+  
+  
+    
+      <meta property="article:section" content="Karmada">
+    
+  
+  
+    
+      <meta property="article:tag" content="Karmada">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/28917392?v=4">
+  <meta property="twitter:image" content="https://avatars.githubusercontent.com/u/28917392?v=4">
+
+
+
+
+
+
+    <title>Karmada 有趣的玩法：自定义准入控制器</title>
+
+    <link rel="icon" href="https://prodanlabs.github.io/images/logo.png">
+    
+
+    
+
+    <link rel="canonical" href="https://prodanlabs.github.io/post/karmada/funny-karmada-03/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://prodanlabs.github.io/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://prodanlabs.github.io/" aria-label="去首页">Prodan Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://prodanlabs.github.io/#about" aria-label="打开链接: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://prodanlabs.github.io/#about" aria-label="阅读有关作者的更多信息">
+          <img class="sidebar-profile-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">Prodan</h4>
+        
+          <h5 class="sidebar-profile-bio">Every time you come to mind, I realize I&rsquo;m smiling.</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/prodanlabs" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      Karmada 有趣的玩法：自定义准入控制器
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time datetime="2022-03-18T15:40:49&#43;08:00">
+        
+  三月 18, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://prodanlabs.github.io/categories/karmada">Karmada</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <p><img src="../images/funny-karmada-03-01.jpg" alt="avatar"></p>
+<p>Kubernetes 提供了很多确保工作负载安全的功能，其中有一项是准入控制器(Admission Controllers)， 在对象持久化之前对 API Server 的请求进行拦截，可以更改请求对象，也可以完全拒绝请求。Kubernetes有两个特殊的准入控制器: MutatingAdmissionWebhook 和 ValidatingAdmissionWebhook，分别作为修改和验证请求对象的准入控制 WebHook。</p>
+<p>回到 Karmada 的应用场景中来，笔者之前收到用户反馈，有一些 Workload 和 PVC  并不在 Karmada 的控制面，删除 Namespace 时没有检查或因为 member 集群多检查没有到位，在 Karmada 控制面删除 Namespace 后, 有些 member 集群的 Namespace 下的 Workload 和 PVC 被级联删除了。在生产环境中，这种失误往往能导致灾难级的故障。</p>
+<p>对于这个问题，我们可以通过验证（Validating）准入控制来解决，在 Karmada 控制面删除 Namespace 或 CRDs 时，去遍历 member 集群，如果 Namespace 下有 Workload 或 PVC, CRDs 还有资源对象存在就拒绝请求。</p>
+<h3 id="方案">方案</h3>
+<p>以删除 Namespace 为例，当 API Server 收到删除 Namespace 的请求时，ValidatingAdmissionWebhook 就去调用我们自定义的 WebHook 服务，WebHook 服务从 Karmada 的 AA Server 中查找该 Namespace 有没有 Pod ，如果有，则拒绝请求。
+<img src="../images/funny-karmada-03-02.png" alt="avatar"></p>
+<h3 id="实现">实现</h3>
+<p>其实实现起来非常简单，通过HTTP Server 接收 AdmissionRequest 响应 AdmissionResponse 就行。我们可以参考 Karmada 社区的 WebHook，通过 WebHook Manager 来管理 WebHook，可以很优雅的复用和封装。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Run</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">Options</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">config</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">GetConfig</span>()
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">hookManager</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">NewManager</span>(<span style="color:#a6e22e">config</span>, <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">Options</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Scheme</span>: <span style="color:#a6e22e">NewSchema</span>(),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">WebhookServer</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">webhook</span>.<span style="color:#a6e22e">Server</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Host</span>:          <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">BindAddress</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Port</span>:          <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">SecurePort</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">CertDir</span>:       <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">CertDir</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">CertName</span>:      <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">CertName</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">KeyName</span>:       <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">KeyName</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">TLSMinVersion</span>: <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">TLSMinVersion</span>,
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">LeaderElection</span>:         <span style="color:#66d9ef">false</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">MetricsBindAddress</span>:     <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">MetricsBindAddress</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">HealthProbeBindAddress</span>: <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">HealthProbeBindAddress</span>,
+</span></span><span style="display:flex;"><span> })
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to build webhook server: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hookManager</span>.<span style="color:#a6e22e">AddHealthzCheck</span>(<span style="color:#a6e22e">CheckEndpointHealthz</span>, <span style="color:#a6e22e">healthz</span>.<span style="color:#a6e22e">Ping</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to add %q health check endpoint: %v&#34;</span>, <span style="color:#a6e22e">CheckEndpointHealthz</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hookManager</span>.<span style="color:#a6e22e">AddReadyzCheck</span>(<span style="color:#a6e22e">CheckEndpointReadyz</span>, <span style="color:#a6e22e">healthz</span>.<span style="color:#a6e22e">Ping</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to add %q health check endpoint: %v&#34;</span>, <span style="color:#a6e22e">CheckEndpointReadyz</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Info</span>(<span style="color:#e6db74">&#34;registering webhooks to the webhook server&#34;</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">hookServer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hookManager</span>.<span style="color:#a6e22e">GetWebhookServer</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">hookServer</span>.<span style="color:#a6e22e">Register</span>(<span style="color:#e6db74">&#34;/validate-namespace&#34;</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">webhook</span>.<span style="color:#a6e22e">Admission</span>{<span style="color:#a6e22e">Handler</span>: <span style="color:#a6e22e">namespace</span>.<span style="color:#a6e22e">NewValidatingAdmission</span>(<span style="color:#a6e22e">hookManager</span>)})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">// blocks until the context is done.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hookManager</span>.<span style="color:#a6e22e">Start</span>(<span style="color:#a6e22e">ctx</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;webhook server exits unexpectedly: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">// never reach here
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>同样，我们逻辑也在 Handle 函数中处理。先列出 member 集群，然后再检查 member 集群下的 Namespace 有没有运行 Pod。如果有，则拒绝请求。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">v</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ValidatingAdmission</span>) <span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#a6e22e">admission</span>.<span style="color:#a6e22e">Request</span>) <span style="color:#a6e22e">admission</span>.<span style="color:#a6e22e">Response</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;%s namespace %q&#34;</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Operation</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Name</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">clusters</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">ClusterList</span>(<span style="color:#a6e22e">ctx</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">admission</span>.<span style="color:#a6e22e">Denied</span>(<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">clusters</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">PodList</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Name</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">admission</span>.<span style="color:#a6e22e">Denied</span>(<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">admission</span>.<span style="color:#a6e22e">Allowed</span>(<span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>需要注意的是，Pull 模式需要部署 ANP 。感兴趣的读者可以去 Karmada 社区查看这方面的文档。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">v</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ValidatingAdmission</span>) <span style="color:#a6e22e">ClusterList</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) ([]<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">clusterList</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">clusterv1alpha1</span>.<span style="color:#a6e22e">ClusterList</span>{}
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">Client</span>.<span style="color:#a6e22e">List</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">clusterList</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to list clusters, error: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">clusters</span> []<span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">clusterList</span>.<span style="color:#a6e22e">Items</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// TODO Pull 模式可以部署 apiserver-network-proxy（ANP）来访问。这里跳过.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// https://github.com/karmada-io/karmada/blob/master/docs/userguide/aggregated-api-endpoint.md
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Spec</span>.<span style="color:#a6e22e">SyncMode</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">clusterv1alpha1</span>.<span style="color:#a6e22e">Pull</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">clusters</span> = append(<span style="color:#a6e22e">clusters</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Name</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">clusters</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里通过 Karmada API Server Proxy 获取 Pod</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">v</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ValidatingAdmission</span>) <span style="color:#a6e22e">PodList</span>(<span style="color:#a6e22e">cluster</span>, <span style="color:#a6e22e">namespace</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">uil</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%s/apis/cluster.karmada.io/v1alpha1/clusters/%s/proxy/api/v1/namespaces/%s/pods&#34;</span>, <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">Config</span>.<span style="color:#a6e22e">Host</span>, <span style="color:#a6e22e">cluster</span>, <span style="color:#a6e22e">namespace</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">request</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">Clientset</span>.<span style="color:#a6e22e">RESTClient</span>().<span style="color:#a6e22e">Get</span>().<span style="color:#a6e22e">RequestURI</span>(<span style="color:#a6e22e">uil</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">Error</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;result err: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">pods</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">Raw</span>()
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;raw err: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">podList</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">corev1</span>.<span style="color:#a6e22e">PodList</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Unmarshal</span>(<span style="color:#a6e22e">pods</span>, <span style="color:#a6e22e">podList</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;unmarshal err: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">podList</span>.<span style="color:#a6e22e">Items</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">activityPods</span> []<span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">podList</span>.<span style="color:#a6e22e">Items</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Name</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">activityPods</span> = append(<span style="color:#a6e22e">activityPods</span>, <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Name</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;the workload of cluster %q namespace %q is not empty, pods: %s&#34;</span>, <span style="color:#a6e22e">cluster</span>, <span style="color:#a6e22e">namespace</span>, <span style="color:#a6e22e">activityPods</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="部署">部署</h3>
+<p>容器化部署也行，笔者这里是二进制运行。</p>
+<p>生成证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>openssl genrsa -out ca.key <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>openssl req -x509 -new -nodes -key ca.key -subj <span style="color:#e6db74">&#34;/C=CN/ST=Guangdong/L=Guangzhou/O=karmada/OU=System/CN=karmada&#34;</span> -days <span style="color:#ae81ff">3650</span> -out ca.crt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>openssl genrsa -out tls.key <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>openssl req -new -nodes -sha256 -subj <span style="color:#e6db74">&#34;/C=CN/ST=Guangdong/L=Guangzhou/O=kubernetes/OU=System/CN=karmada&#34;</span>  -key tls.key -out tls.csr
+</span></span><span style="display:flex;"><span>openssl x509 -req -days <span style="color:#ae81ff">3650</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -extfile &lt;<span style="color:#f92672">(</span>printf <span style="color:#e6db74">&#34;keyUsage=critical,Digital Signature, Key Encipherment\nextendedKeyUsage=serverAuth,clientAuth\nauthorityKeyIdentifier=keyid,issuer\nsubjectAltName=DNS:karmada-custom-webhook.karmada-system.svc.cluster.local,DNS:localhost,IP:172.0.0.1,IP:172.31.6.145&#34;</span><span style="color:#f92672">)</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -sha256 -CA ca.crt -CAkey ca.key -set_serial <span style="color:#ae81ff">01</span> -in tls.csr -out tls.crt
+</span></span></code></pre></div><p>创建 Validating 配置文件，只验证删除请求。Namespace 是集群级别的资源，所以 scope 是 Cluster。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">admissionregistration.k8s.io/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ValidatingWebhookConfiguration</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">validating-config</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">validating-config</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">webhooks</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;namespace-policy.example.com&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">rules</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">apiGroups</span>: [<span style="color:#e6db74">&#34;&#34;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">apiVersions</span>: [<span style="color:#e6db74">&#34;v1&#34;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">operations</span>: [<span style="color:#e6db74">&#34;DELETE&#34;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">resources</span>: [<span style="color:#e6db74">&#34;namespaces&#34;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">scope</span>: <span style="color:#e6db74">&#34;Cluster&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">clientConfig</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">url</span>: <span style="color:#ae81ff">https://172.31.6.145:8443/validate-namespace</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">caBundle</span>: {{<span style="color:#ae81ff">caBundle}}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">failurePolicy</span>: <span style="color:#ae81ff">Fail</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">sideEffects</span>: <span style="color:#ae81ff">None</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">admissionReviewVersions</span>: [<span style="color:#e6db74">&#34;v1&#34;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">timeoutSeconds</span>: <span style="color:#ae81ff">3</span>
+</span></span></code></pre></div><p>应用 Validating 配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ca_string<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>sudo cat ca.crt| base64 | tr <span style="color:#e6db74">&#34;\n&#34;</span> <span style="color:#e6db74">&#34; &#34;</span>|sed s/<span style="color:#f92672">[[</span>:space:<span style="color:#f92672">]]</span>//g<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#34;s/{{caBundle}}/</span><span style="color:#e6db74">${</span>ca_string<span style="color:#e6db74">}</span><span style="color:#e6db74">/g&#34;</span> webhook-configuration.yaml
+</span></span><span style="display:flex;"><span>kubectl --kubeconfig /etc/karmada/karmada-apiserver.config create  -f webhook-configuration.yaml
+</span></span></code></pre></div><p>运行 WebHook 服务</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./karmada-custom-webhook <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--kubeconfig /etc/karmada/karmada-apiserver.config <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--cert-dir ./certs
+</span></span></code></pre></div><p>创建测试 Namespace</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl --kubeconfig /etc/karmada/karmada-apiserver.config create ns test
+</span></span></code></pre></div><p>在其中一个 member 集群创建一个 Pod</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl create -f busybox.yaml -n test
+</span></span></code></pre></div><p>删除 Namespace ，因为有 Pod 在运行，使用拒绝了请求。说明它可以正常的工作。
+<img src="../images/funny-karmada-03-03.png" alt="avatar"></p>
+<h3 id="最后">最后</h3>
+<p>当然，这也只是其中一种保障生产安全的一种方式，仅供参考。在 kubernetes 生态中，也有一些工具可以做到。</p>
+<p>参考链接：
+<a href="https://github.com/karmada-io/karmada">https://github.com/karmada-io/karmada</a></p>
+<p>文章中的源码：
+<a href="https://github.com/prodanlabs/karmada-examples">https://github.com/prodanlabs/karmada-examples</a></p>
+<hr>
+<p><img src="https://prodanlabs.github.io/images/weixin.png" alt=""></p>
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://prodanlabs.github.io/tags/karmada/">Karmada</a>
+
+                  </div>
+                
+              
+            
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-04/" data-tooltip="Karmada 有趣的玩法：ANP" aria-label="下一篇: Karmada 有趣的玩法：ANP">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-01/" data-tooltip="Karmada 有趣的玩法：自定义控制器" aria-label="上一篇: Karmada 有趣的玩法：自定义控制器">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+            
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 Prodan. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-04/" data-tooltip="Karmada 有趣的玩法：ANP" aria-label="下一篇: Karmada 有趣的玩法：ANP">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-01/" data-tooltip="Karmada 有趣的玩法：自定义控制器" aria-label="上一篇: Karmada 有趣的玩法：自定义控制器">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+    
+    <h4 id="about-card-name">Prodan</h4>
+    
+      <div id="about-card-bio">Every time you come to mind, I realize I&rsquo;m smiling.</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        DevOps
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        Guangzhou, China.
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://prodanlabs.github.io/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://prodanlabs.github.io/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+    
+  </body>
+</html>
+

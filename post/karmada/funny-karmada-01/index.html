@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/prodanlabs.github.io\/",
+  "author": {
+    "@type": "Person",
+    "name": "Prodan",
+    
+    "image": "https://avatars.githubusercontent.com/u/28917392?v=4"
+    
+  },
+  "name":"Prodan Blog",
+  "description":"",
+  "url":"https:\/\/prodanlabs.github.io\/post\/karmada\/funny-karmada-01\/",
+  "keywords":"[tech]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.96.0 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="Prodan">
+<meta name="keywords" content="tech">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Karmada 有趣的玩法：自定义控制器">
+<meta name="twitter:title" content="Karmada 有趣的玩法：自定义控制器">
+<meta property="og:url" content="https://prodanlabs.github.io/post/karmada/funny-karmada-01/">
+<meta property="twitter:url" content="https://prodanlabs.github.io/post/karmada/funny-karmada-01/">
+<meta property="og:site_name" content="Prodan Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2022-02-25T12:14:30">
+  
+  
+    <meta property="article:modified_time" content="2022-02-25T12:14:30">
+  
+  
+  
+    
+      <meta property="article:section" content="Karmada">
+    
+  
+  
+    
+      <meta property="article:tag" content="Karmada">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/28917392?v=4">
+  <meta property="twitter:image" content="https://avatars.githubusercontent.com/u/28917392?v=4">
+
+
+
+
+
+
+    <title>Karmada 有趣的玩法：自定义控制器</title>
+
+    <link rel="icon" href="https://prodanlabs.github.io/images/logo.png">
+    
+
+    
+
+    <link rel="canonical" href="https://prodanlabs.github.io/post/karmada/funny-karmada-01/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://prodanlabs.github.io/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://prodanlabs.github.io/" aria-label="去首页">Prodan Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://prodanlabs.github.io/#about" aria-label="打开链接: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://prodanlabs.github.io/#about" aria-label="阅读有关作者的更多信息">
+          <img class="sidebar-profile-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">Prodan</h4>
+        
+          <h5 class="sidebar-profile-bio">Every time you come to mind, I realize I&rsquo;m smiling.</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://prodanlabs.github.io/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/prodanlabs" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      Karmada 有趣的玩法：自定义控制器
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time datetime="2022-02-25T12:14:30&#43;08:00">
+        
+  二月 25, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://prodanlabs.github.io/categories/karmada">Karmada</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <p><img src="../images/funny-karmada-01-01.png" alt="avatar"></p>
+<p>控制器是 Kubernetes 的核心功能之一，它确保资源对象处于并保持由声明定义的所需状态，如果资源偏离了期望的状态，就会触发控制器执行必要的操作，将资源对象的当前状态恢复为期望的状态。同样，Karmada 也内置一组控制器，运行在 karmada controller manager 中，这些内置的控制器提供了 karmada 的核心功能。</p>
+<p>在面对复杂多变的应用场景和个性化需求时，因为内置的控制器通用性，往往满足不了业务要求，这时候我们就需要开发我们自己的控制器了。接下来笔者以一个小的需求为例，来实现一个简单的 karmada 控制器。</p>
+<h3 id="需求和设计">需求和设计</h3>
+<p>我们在使用 Karmada 的过程中发现，创建了资源对象后，还需要创建对应的传播策略，Karmada 才会把资源分发到成员集群，这样显得没那么简便了。如果像内置的 Namespace Controller 一样全局自动同步，那又显得不可控。所以笔者的想法是半自动式，通过 Annotations 指定成员集群，创建资源对象后，由一个自定义的控制器根据 Annotations 的指定成员集群进行把分发。</p>
+<p>我们简单回顾下 Karmada 工作的大致过程</p>
+<p><img src="../images/funny-karmada-01-02.png" alt="avatar"></p>
+<p>以创建 Deployment 为例</p>
+<ul>
+<li>创建常规的 Kubernetes Deployment 对象；</li>
+<li>然后创建 Karmada PropagationPolicy，它定义了 Deployment 需要被调度到哪些成员集群；</li>
+<li>接着 Karmada 根据策略进行调度和资源绑定，Override Policy 可以对结果进行修改；</li>
+<li>最后 Karmada 会生成并在成员集群对应的 Namespace 中创建 Work 对象，Execution Controller(Push 模式)和 Karmada Agent(Pull 模式) 不断 Reconcile Work 对象，同步 Deployment 的状态。</li>
+</ul>
+<p>我们可以实现一个自定义控制器直接渲染并创建 Work 对象，让 Execution Controller 和 Karmada Agent 去 Reconcile。可能有些读者朋友觉得，哎呀，这操作太骚太粗暴了，ok，那我们也可以再实现一种方式，就是创建 PropagationPolicy 对象，然后交给 Karmada 去调度分发。</p>
+<h3 id="控制器管理器">控制器管理器</h3>
+<p>为了方便管理自定义的控制器，我们先实现一个控制器管理器(Controller Manager) 对自定义的控制器进行管理。笔者不推荐把自定义的控制器注册到 Karmada 的 Controller Manager 中。</p>
+<p>沿用 Kubernetes 的风格，使用 cobra 库构建控制器管理器入口</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewCustomControllerManagerCommand</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">opts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">NewOptions</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">cmd</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Use</span>:  <span style="color:#e6db74">&#34;karmada-custom-controller-manager&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Long</span>: <span style="color:#e6db74">`karmada custom controller manager`</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">RunE</span>: <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">cmd</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>, <span style="color:#a6e22e">args</span> []<span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">Validate</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Run</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">opts</span>)
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">InitFlags</span>(<span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">CommandLine</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">cmd</span>.<span style="color:#a6e22e">Flags</span>().<span style="color:#a6e22e">AddGoFlagSet</span>(<span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">CommandLine</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">AddFlags</span>(<span style="color:#a6e22e">cmd</span>.<span style="color:#a6e22e">Flags</span>())
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">cmd</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>controller-runtime 库可以帮助我们快速实现一个控制器管理器</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Run</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">Options</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">config</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">GetConfig</span>()
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">initConfig</span>(<span style="color:#a6e22e">config</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">mgr</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">NewManager</span>(<span style="color:#a6e22e">config</span>, <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">Options</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Scheme</span>:                     <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NewScheme</span>(),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">SyncPeriod</span>:                 <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">ResyncPeriod</span>.<span style="color:#a6e22e">Duration</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">LeaderElection</span>:             <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">LeaderElection</span>.<span style="color:#a6e22e">LeaderElect</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">LeaderElectionID</span>:           <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">LeaderElection</span>.<span style="color:#a6e22e">ResourceName</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">LeaderElectionNamespace</span>:    <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">LeaderElection</span>.<span style="color:#a6e22e">ResourceNamespace</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">LeaderElectionResourceLock</span>: <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">LeaderElection</span>.<span style="color:#a6e22e">ResourceLock</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">HealthProbeBindAddress</span>:     <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">JoinHostPort</span>(<span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">BindAddress</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">SecurePort</span>)),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">MetricsBindAddress</span>:         <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">MetricsBindAddress</span>,
+</span></span><span style="display:flex;"><span> })
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;new controller manager failed: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mgr</span>.<span style="color:#a6e22e">AddHealthzCheck</span>(<span style="color:#a6e22e">CheckEndpointHealthz</span>, <span style="color:#a6e22e">healthz</span>.<span style="color:#a6e22e">Ping</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to add %q health check endpoint: %v&#34;</span>, <span style="color:#a6e22e">CheckEndpointHealthz</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mgr</span>.<span style="color:#a6e22e">AddReadyzCheck</span>(<span style="color:#a6e22e">CheckEndpointReadyz</span>, <span style="color:#a6e22e">healthz</span>.<span style="color:#a6e22e">Ping</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to add %q health check endpoint: %v&#34;</span>, <span style="color:#a6e22e">CheckEndpointReadyz</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">AddToManager</span>(<span style="color:#a6e22e">mgr</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mgr</span>.<span style="color:#a6e22e">Start</span>(<span style="color:#a6e22e">ctx</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;controller manager exit: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="自定义控制器">自定义控制器</h3>
+<p>New 一个 Controller 并加入到控制器管理器中。值得注意的是，需要把 Karmada 的资源注册到控制器管理器，否则控制器管理器会找不到 Karmada 的资源。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Controller reconciles a ContainerSet object
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Controller</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Client</span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">scheme</span>        <span style="color:#f92672">*</span><span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Scheme</span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">recorder</span>      <span style="color:#a6e22e">record</span>.<span style="color:#a6e22e">EventRecorder</span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">dynamicClient</span> <span style="color:#a6e22e">dynamic</span>.<span style="color:#a6e22e">Interface</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// NewController returns a new Controller
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewController</span>(<span style="color:#a6e22e">mgr</span> <span style="color:#a6e22e">manager</span>.<span style="color:#a6e22e">Manager</span>, <span style="color:#a6e22e">dynamicClient</span> <span style="color:#a6e22e">dynamic</span>.<span style="color:#a6e22e">Interface</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Controller</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Controller</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Client</span>:        <span style="color:#a6e22e">mgr</span>.<span style="color:#a6e22e">GetClient</span>(),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">scheme</span>:        <span style="color:#a6e22e">mgr</span>.<span style="color:#a6e22e">GetScheme</span>(),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">recorder</span>:      <span style="color:#a6e22e">mgr</span>.<span style="color:#a6e22e">GetEventRecorderFor</span>(<span style="color:#a6e22e">ControllerName</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">dynamicClient</span>: <span style="color:#a6e22e">dynamicClient</span>,
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// AddToManager create controller and register to controller manager
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">AddToManager</span>(<span style="color:#a6e22e">mgr</span> <span style="color:#a6e22e">manager</span>.<span style="color:#a6e22e">Manager</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">// Setup Scheme for k8s appv1 resources
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">appsv1</span>.<span style="color:#a6e22e">AddToScheme</span>(<span style="color:#a6e22e">mgr</span>.<span style="color:#a6e22e">GetScheme</span>()); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">// Setup Scheme for karmada clusterv1alpha1 resources
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">clusterv1alpha1</span>.<span style="color:#a6e22e">AddToScheme</span>(<span style="color:#a6e22e">mgr</span>.<span style="color:#a6e22e">GetScheme</span>()); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">AddToScheme</span>(<span style="color:#a6e22e">mgr</span>.<span style="color:#a6e22e">GetScheme</span>()); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">// Setup Scheme for karmada workv1alpha1 resources workv1alpha1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">workv1alpha1</span>.<span style="color:#a6e22e">AddToScheme</span>(<span style="color:#a6e22e">mgr</span>.<span style="color:#a6e22e">GetScheme</span>()); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">dynamicClient</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">dynamic</span>.<span style="color:#a6e22e">NewForConfig</span>(<span style="color:#a6e22e">mgr</span>.<span style="color:#a6e22e">GetConfig</span>())
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">NewController</span>(<span style="color:#a6e22e">mgr</span>, <span style="color:#a6e22e">dynamicClient</span>).<span style="color:#a6e22e">SetupWithManager</span>(<span style="color:#a6e22e">mgr</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>设置控制器管理器从 Karmada ApiServer With Deployment 资源的事件(Event)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Controller</span>) <span style="color:#a6e22e">SetupWithManager</span>(<span style="color:#a6e22e">mgr</span> <span style="color:#a6e22e">manager</span>.<span style="color:#a6e22e">Manager</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">predicate</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">predicate</span>.<span style="color:#a6e22e">Funcs</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">CreateFunc</span>: <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">CreateEvent</span>) <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">UpdateFunc</span>: <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">UpdateEvent</span>) <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">DeleteFunc</span>: <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">DeleteEvent</span>) <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// GenericEvent用来处理未知类型的Event，比如非集群内资源事件，一般不会使用。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">GenericFunc</span>: <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">GenericEvent</span>) <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">NewControllerManagedBy</span>(<span style="color:#a6e22e">mgr</span>).<span style="color:#a6e22e">For</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">appsv1</span>.<span style="color:#a6e22e">Deployment</span>{}).<span style="color:#a6e22e">WithEventFilter</span>(<span style="color:#a6e22e">predicate</span>).<span style="color:#a6e22e">Complete</span>(<span style="color:#a6e22e">c</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>控制器管理器会监视资源的创建/更新/删除事件，并触发 Reconcile 函数作为响应，不断地对比资源对象的期望状态和实际状态。所以我们的业务逻辑都是在 Reconcile 函数中实现的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Controller</span>) <span style="color:#a6e22e">Reconcile</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">request</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">Request</span>) (<span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">Result</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>生成的 work 对象需要取消 OwnerReferences 字段的声明，因为 work 对象是创建在成员集群对应的 Namespace 中，和 Deployment 不在一个 Namespace。OwnerReferences 只支持集群级别的资源和同 Namespace 级别的资源。反之就会因为找不到 Owner 被 Kubernetes 的 GC 控制器清理掉。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Controller</span>) <span style="color:#a6e22e">buildWorks</span>(<span style="color:#a6e22e">deployment</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">appsv1</span>.<span style="color:#a6e22e">Deployment</span>, <span style="color:#a6e22e">clusters</span> []<span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">uncastObj</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">DefaultUnstructuredConverter</span>.<span style="color:#a6e22e">ToUnstructured</span>(<span style="color:#a6e22e">deployment</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;Failed to transform deployment %s. Error: %v&#34;</span>, <span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">GetName</span>(), <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">deploymentObj</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">unstructured</span>.<span style="color:#a6e22e">Unstructured</span>{<span style="color:#a6e22e">Object</span>: <span style="color:#a6e22e">uncastObj</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">cluster</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">clusters</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">workNamespace</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">names</span>.<span style="color:#a6e22e">GenerateExecutionSpaceName</span>(<span style="color:#a6e22e">cluster</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;Failed to generate execution space name for member cluster %s, err is %v&#34;</span>, <span style="color:#a6e22e">cluster</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">workName</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">names</span>.<span style="color:#a6e22e">GenerateWorkName</span>(<span style="color:#a6e22e">deploymentObj</span>.<span style="color:#a6e22e">GetKind</span>(), <span style="color:#a6e22e">deploymentObj</span>.<span style="color:#a6e22e">GetName</span>(), <span style="color:#a6e22e">deploymentObj</span>.<span style="color:#a6e22e">GetNamespace</span>())
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">objectMeta</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">ObjectMeta</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Name</span>:       <span style="color:#a6e22e">workName</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Namespace</span>:  <span style="color:#a6e22e">workNamespace</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Finalizers</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#a6e22e">karmadautil</span>.<span style="color:#a6e22e">ExecutionControllerFinalizer</span>},
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">/*                      OwnerReferences: []metav1.OwnerReference{
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">           *metav1.NewControllerRef(deployment, deployment.GroupVersionKind()),
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   },*/</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Labels</span>: <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;bootstrapping.karmada.io/%s&#34;</span>, <span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">Name</span>): <span style="color:#e6db74">&#34;true&#34;</span>},
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;BuildWorks: WorkNamespace %q WorkName %q DeploymentNamespace %q DeploymentName %q&#34;</span>, <span style="color:#a6e22e">objectMeta</span>.<span style="color:#a6e22e">Namespace</span>, <span style="color:#a6e22e">objectMeta</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">Namespace</span>, <span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">Name</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">karmadautil</span>.<span style="color:#a6e22e">MergeLabel</span>(<span style="color:#a6e22e">deploymentObj</span>, <span style="color:#a6e22e">workv1alpha1</span>.<span style="color:#a6e22e">WorkNamespaceLabel</span>, <span style="color:#a6e22e">workNamespace</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">karmadautil</span>.<span style="color:#a6e22e">MergeLabel</span>(<span style="color:#a6e22e">deploymentObj</span>, <span style="color:#a6e22e">workv1alpha1</span>.<span style="color:#a6e22e">WorkNameLabel</span>, <span style="color:#a6e22e">workName</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">helper</span>.<span style="color:#a6e22e">CreateOrUpdateWork</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Client</span>, <span style="color:#a6e22e">objectMeta</span>, <span style="color:#a6e22e">deploymentObj</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如上原因，所以还需要实现一个办法，在删除 deployment 对象后，然后通过标签找到并删除 work 对象。这里笔者使用 Dynamic Client 的方式实现。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Controller</span>) <span style="color:#a6e22e">removeWorks</span>(<span style="color:#a6e22e">request</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">clusters</span> []<span style="color:#a6e22e">clusterv1alpha1</span>.<span style="color:#a6e22e">Cluster</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">cluster</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">clusters</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">workNamespace</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">names</span>.<span style="color:#a6e22e">GenerateExecutionSpaceName</span>(<span style="color:#a6e22e">cluster</span>.<span style="color:#a6e22e">Name</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;Failed to get namespace of member cluster %s. err: %v&#34;</span>, <span style="color:#a6e22e">cluster</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">worksList</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">dynamicClient</span>.<span style="color:#a6e22e">Resource</span>(<span style="color:#a6e22e">workGVR</span>).<span style="color:#a6e22e">Namespace</span>(<span style="color:#a6e22e">workNamespace</span>).<span style="color:#a6e22e">List</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">ListOptions</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">LabelSelector</span>: <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;bootstrapping.karmada.io/%s&#34;</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">Name</span>),
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">worksList</span>.<span style="color:#a6e22e">Items</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">work</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">worksList</span>.<span style="color:#a6e22e">Items</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">dynamicClient</span>.<span style="color:#a6e22e">Resource</span>(<span style="color:#a6e22e">workGVR</span>).<span style="color:#a6e22e">Namespace</span>(<span style="color:#a6e22e">workNamespace</span>).<span style="color:#a6e22e">Delete</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#a6e22e">work</span>.<span style="color:#a6e22e">GetName</span>(), <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">DeleteOptions</span>{}); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;Delete cluster %q namespace %q deployment %q work successful.&#34;</span>, <span style="color:#a6e22e">cluster</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">Namespace</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">Name</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>控制器管理器 With 到删除 Deployment 对象的事件后触发调用 Reconcile 函数，所以我们需要在 Reconcile 函数中实现完成对 work 对象的删除动作。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// 如果找不到 deployment ，则认为 deployment 已经删除，则删除 work
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Client</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">NamespacedName</span>, <span style="color:#a6e22e">deployment</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">apierrors</span>.<span style="color:#a6e22e">IsNotFound</span>(<span style="color:#a6e22e">err</span>) {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Warningf</span>(<span style="color:#e6db74">&#34;Namespace %s %v&#34;</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">Namespace</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">removeWorks</span>(<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">clusterList</span>.<span style="color:#a6e22e">Items</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;delete namespace %q deployment %q work failed. err: %v&#34;</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">NamespacedName</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">Result</span>{}, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">Result</span>{}, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">Result</span>{<span style="color:#a6e22e">Requeue</span>: <span style="color:#66d9ef">true</span>}, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 通过 DeletionTimestamp 的值判断 deployment 状态，非空时删除 work
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">DeletionTimestamp</span>.<span style="color:#a6e22e">IsZero</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">removeWorks</span>(<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">clusterList</span>.<span style="color:#a6e22e">Items</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;delete namespace %q deployment %q work failed. err: %v&#34;</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">NamespacedName</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">Result</span>{<span style="color:#a6e22e">Requeue</span>: <span style="color:#66d9ef">true</span>}, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ctrl</span>.<span style="color:#a6e22e">Result</span>{}, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span> }
+</span></span></code></pre></div><p>现在实现另外一种方式，即创建 PropagationPolicy。这里使用了一个简单的资源模板，声明了 OwnerReferences 字段，Deployment 删除后，等待 Kubernetes 的 GC 控制器删除即可。因为在同一个 Namespace，所以我们什么都不需要做。</p>
+<p>创建 PropagationPolicy 对象使用控制器管理器的 controllerutil 库。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// buildPropagationPolicy create PropagationPolicy
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Controller</span>) <span style="color:#a6e22e">buildPropagationPolicy</span>(<span style="color:#a6e22e">deployment</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">appsv1</span>.<span style="color:#a6e22e">Deployment</span>, <span style="color:#a6e22e">clusters</span> []<span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">pp</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">PropagationPolicy</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">TypeMeta</span>: <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">TypeMeta</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">APIVersion</span>: <span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">GroupVersion</span>.<span style="color:#a6e22e">String</span>(),
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Kind</span>:       <span style="color:#e6db74">&#34;PropagationPolicy&#34;</span>,
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ObjectMeta</span>: <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">ObjectMeta</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Name</span>:      <span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">Name</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Namespace</span>: <span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">Namespace</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">OwnerReferences</span>: []<span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">OwnerReference</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">*</span><span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">NewControllerRef</span>(<span style="color:#a6e22e">deployment</span>, <span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">GroupVersionKind</span>()),
+</span></span><span style="display:flex;"><span>   },
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Spec</span>: <span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">PropagationSpec</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">ResourceSelectors</span>: []<span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">ResourceSelector</span>{
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">APIVersion</span>: <span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">APIVersion</span>,
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">Kind</span>:       <span style="color:#e6db74">&#34;Deployment&#34;</span>,
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">Name</span>:       <span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">Name</span>,
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">Namespace</span>:  <span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">Namespace</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>   },
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Placement</span>: <span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">Placement</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ClusterAffinity</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">ClusterAffinity</span>{
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">ClusterNames</span>: <span style="color:#a6e22e">clusters</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ReplicaScheduling</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">ReplicaSchedulingStrategy</span>{
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">ReplicaDivisionPreference</span>: <span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">ReplicaDivisionPreferenceWeighted</span>,
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">ReplicaSchedulingType</span>:     <span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">ReplicaSchedulingTypeDivided</span>,
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">WeightPreference</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">ClusterPreferences</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">StaticWeightList</span>: []<span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">StaticClusterWeight</span>{
+</span></span><span style="display:flex;"><span>       {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">TargetCluster</span>: <span style="color:#a6e22e">policy1alpha1</span>.<span style="color:#a6e22e">ClusterAffinity</span>{
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">ClusterNames</span>: <span style="color:#a6e22e">clusters</span>,
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Weight</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>       },
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>     },
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>   },
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">controllerutil</span>.<span style="color:#a6e22e">CreateOrUpdate</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Client</span>, <span style="color:#a6e22e">pp</span>, <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span> })
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;Failed transform PropagationPolicy %s. err: %v&#34;</span>, <span style="color:#a6e22e">pp</span>.<span style="color:#a6e22e">GetName</span>(), <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">controllerutil</span>.<span style="color:#a6e22e">OperationResultCreated</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;Namespace %q Create PropagationPolicy %q successfully.&#34;</span>, <span style="color:#a6e22e">pp</span>.<span style="color:#a6e22e">GetNamespace</span>(), <span style="color:#a6e22e">pp</span>.<span style="color:#a6e22e">GetName</span>())
+</span></span><span style="display:flex;"><span> } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">controllerutil</span>.<span style="color:#a6e22e">OperationResultUpdated</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;Namespace %q Update PropagationPolicy %q successfully.&#34;</span>, <span style="color:#a6e22e">pp</span>.<span style="color:#a6e22e">GetNamespace</span>(), <span style="color:#a6e22e">pp</span>.<span style="color:#a6e22e">GetName</span>())
+</span></span><span style="display:flex;"><span> } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">klog</span>.<span style="color:#a6e22e">V</span>(<span style="color:#ae81ff">3</span>).<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;Namespace %q Update PropagationPolicy %q is up to date.&#34;</span>, <span style="color:#a6e22e">pp</span>.<span style="color:#a6e22e">GetNamespace</span>(), <span style="color:#a6e22e">pp</span>.<span style="color:#a6e22e">GetName</span>())
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="测试">测试</h3>
+<p>现在我们已经实现了一个自定义的控制器，可以进行测试了。先测试第一种方式，自定义控制器直接创建 work 对象。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">annotations</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">bootstrapping.karmada.io/deployments-global</span>: <span style="color:#e6db74">&#34;false&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">bootstrapping.karmada.io/deployments-members</span>: <span style="color:#e6db74">&#34;member1,member2,member3&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">bootstrapping.karmada.io/deployments-force</span>: <span style="color:#e6db74">&#34;true&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.io/library/nginx:1.21.1-alpine</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">TCP</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">name</span>: <span style="color:#ae81ff">http</span>
+</span></span></code></pre></div><p>创建 deployment 后，Controller 创建 work 成功
+<img src="../images/funny-karmada-01-03.png" alt="avatar"></p>
+<p>Execution Controller 和 Karmada Agent  Reconcile Work 对象也正常。
+<img src="../images/funny-karmada-01-04.png" alt="avatar"></p>
+<p>Controller 日志
+<img src="../images/funny-karmada-01-05.png" alt="avatar"></p>
+<p>删除 deployment 后，work 也正常删除
+<img src="../images/funny-karmada-01-06.png" alt="avatar"></p>
+<p>测试第二种方式，控制器创建 PropagationPolicy 对象，deployments-force 改成 false 即可。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>  <span style="color:#f92672">annotations</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">bootstrapping.karmada.io/deployments-global</span>: <span style="color:#e6db74">&#34;false&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">bootstrapping.karmada.io/deployments-members</span>: <span style="color:#e6db74">&#34;member1,member2,member3&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">bootstrapping.karmada.io/deployments-force</span>: <span style="color:#e6db74">&#34;false&#34;</span>
+</span></span></code></pre></div><p>创建 deployment
+<img src="../images/funny-karmada-01-07.png" alt="avatar"></p>
+<p>如您所见，自定义的 Controller 可以正常工作。</p>
+<h3 id="最后">最后</h3>
+<p>因为 Karmada 兼容 Kubernetes，可以使用 Kubernetes 一系列的库和工具，Karmada 遵循了 Kubernetes 的风格，对于熟悉 Kubernetes 的朋友来说相当的友好，操作的资源对象和逻辑只是变成 Karmada 的而已。</p>
+<p>文中也只是笔者实现自定义控制器的一种方式，通往罗马的一条小道而已，这个控制器的功能也比较简单，很多方面也没有考量，仅供参考。如果各位读者朋友有更 cool 更有趣的控制器实现，也欢迎到 Karmada 社区分享 :)</p>
+<p>Karmada 地址
+<a href="https://github.com/karmada-io/karmada">https://github.com/karmada-io/karmada</a></p>
+<p>文章中的源码：
+<a href="https://github.com/prodanlabs/karmada-examples">https://github.com/prodanlabs/karmada-examples</a></p>
+<hr>
+<p><img src="https://prodanlabs.github.io/images/weixin.png" alt=""></p>
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://prodanlabs.github.io/tags/karmada/">Karmada</a>
+
+                  </div>
+                
+              
+            
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-03/" data-tooltip="Karmada 有趣的玩法：自定义准入控制器" aria-label="下一篇: Karmada 有趣的玩法：自定义准入控制器">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-02/" data-tooltip="Karmada 有趣的玩法：多集群监控" aria-label="上一篇: Karmada 有趣的玩法：多集群监控">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+            
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 Prodan. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-03/" data-tooltip="Karmada 有趣的玩法：自定义准入控制器" aria-label="下一篇: Karmada 有趣的玩法：自定义准入控制器">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://prodanlabs.github.io/post/karmada/funny-karmada-02/" data-tooltip="Karmada 有趣的玩法：多集群监控" aria-label="上一篇: Karmada 有趣的玩法：多集群监控">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
+    </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
+  
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
+</div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://avatars.githubusercontent.com/u/28917392?v=4" alt="作者的图片" />
+    
+    <h4 id="about-card-name">Prodan</h4>
+    
+      <div id="about-card-bio">Every time you come to mind, I realize I&rsquo;m smiling.</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        DevOps
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        Guangzhou, China.
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://prodanlabs.github.io/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://prodanlabs.github.io/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+    
+  </body>
+</html>
+
